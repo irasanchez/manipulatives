@@ -1,6 +1,6 @@
 import React from "react";
 
-export function Controls({ setActiveSection, activeSection, togglePlaying, isPlaying }) {
+export default function Controls({ setActiveSection, activeSection, togglePlaying, isPlaying }) {
   return (
     <div>
       <button
