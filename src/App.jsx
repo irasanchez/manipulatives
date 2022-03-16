@@ -4,18 +4,19 @@ import { Controls } from "./Controls";
 import { ForLoop } from "./ForLoop";
 
 function App() {
-    const demos = [
-        "for loop",
-        "while loop",
-        "while loop evolves into for loop",
-    ];
-    const [currentDemo, setCurrentDemo] = useState(0);
-    const [activeSection, setActiveSection] = useState(0);
-    const [isPlaying, togglePlaying] = useState(false);
+    // const demos = [
+    //     "for loop",
+    //     "while loop",
+    //     "while loop evolves into for loop",
+    // ];
+    // const [currentDemo, setCurrentDemo] = useState(0);
+    // const [activeSection, setActiveSection] = useState(0);
+    // const [isPlaying, togglePlaying] = useState(false);
 
     return (
         <div className="App">
-            <select>
+            test
+            {/* <select>
                 {demos.map((demo) => (
                     <option>{demo}</option>
                 ))}
@@ -33,7 +34,7 @@ function App() {
                     activeSection={activeSection}
                     setActiveSection={setActiveSection}
                 />
-            )}
+            )} */}
         </div>
     );
 }
