@@ -5,7 +5,7 @@ export default function Controls({ setActiveSection, activeSection, togglePlayin
     <div>
       <button
         onClick={() => setActiveSection(
-          activeSection !== 0 ? activeSection - 1 : 0
+          activeSection - 1
         )}
       >
         ⬅️
@@ -13,7 +13,7 @@ export default function Controls({ setActiveSection, activeSection, togglePlayin
       <button onClick={() => togglePlaying(!isPlaying)}>⏯</button>
       <button
         onClick={() => setActiveSection(
-          activeSection === 2 ? 0 : activeSection + 1
+          activeSection + 1
         )}
       >
         ➡️
