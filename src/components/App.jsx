@@ -6,11 +6,23 @@ function App() {
     let demos = ["for ( let i = 0; i < 10; i++ ) { console.log(i); }"];
     let [demoOptions, setDemoOptions] = useState(demos);
     let [lex, setLexer] = useState(new Lexer(demos[0]).getLex());
+    let highlightSectionRanges = {
+        keyWord: [1],
+        expression: [2, 3, 4],
+        block: [5],
+    };
     let [step, setStep] = useState(1);
     let padding = "0 5px";
     return (
         <div className="App">
-            <Controls activeSection={step} setActiveSection={setStep} />
+            <Controls
+                activeSection={step}
+                setActiveSection={setStep}
+                limits={[
+                    highlightSectionRanges.keyWord[0],
+                    highlightSectionRanges.block[0],
+                ]}
+            />
             <br />
             <ForLoop>
                 <div>
@@ -19,7 +31,11 @@ function App() {
                             style={{
                                 padding,
                                 border: `${
-                                    step === 1 ? "2px solid orange" : 0
+                                    highlightSectionRanges.keyWord.includes(
+                                        step
+                                    )
+                                        ? "2px solid orange"
+                                        : 0
                                 }`,
                             }}
                         >
@@ -35,7 +51,9 @@ function App() {
                             <span
                                 style={{
                                     border: `${
-                                        step < 5 && step > 1
+                                        highlightSectionRanges.expression.includes(
+                                            step
+                                        )
                                             ? "2px solid orange"
                                             : 0
                                     }`, // do not count () for steps
@@ -60,7 +78,11 @@ function App() {
                     <CodeBlock>
                         <span
                             style={{
-                                border: `${step > 4 ? "2px solid orange" : 0}`,
+                                border: `${
+                                    highlightSectionRanges.block.includes(step)
+                                        ? "2px solid orange"
+                                        : 0
+                                }`,
                             }}
                         >
                             {lex.block.content.map((block, index) => {
