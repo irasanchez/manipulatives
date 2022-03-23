@@ -20,7 +20,9 @@ function App() {
                 setActiveSection={setStep}
                 limits={[
                     highlightSectionRanges.keyWord[0],
-                    highlightSectionRanges.block[0],
+                    highlightSectionRanges.block[
+                        highlightSectionRanges.block.length - 1
+                    ],
                 ]}
             />
             <br />
@@ -42,6 +44,11 @@ function App() {
                             {lex.keyWord.map((word, index) => (
                                 <span
                                     key={`keword-${index}`}
+                                    style={{
+                                        backgroundColor: `${
+                                            step === 1 ? "cyan" : ""
+                                        }`,
+                                    }}
                                 >{`${word.text}`}</span>
                             ))}
                         </span>
@@ -64,7 +71,14 @@ function App() {
                                         (part, index) => {
                                             return (
                                                 <span
-                                                    style={{ padding }}
+                                                    style={{
+                                                        backgroundColor: `${
+                                                            part.step === step
+                                                                ? "cyan"
+                                                                : ""
+                                                        }`,
+                                                        padding,
+                                                    }}
                                                     key={`expression-${index}`}
                                                 >{`${part.text}`}</span>
                                             );
@@ -95,6 +109,10 @@ function App() {
                                         {isLast && <br />}
                                         <span
                                             style={{
+                                                backgroundColor:
+                                                    block.step === step
+                                                        ? "cyan"
+                                                        : "",
                                                 padding:
                                                     !isFirst && !isLast
                                                         ? indentedPadding
