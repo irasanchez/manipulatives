@@ -11,7 +11,7 @@ export default function ControlButton({ handleClick, char }) {
             className={"w-12 h-12 rounded-full hover:bg-yellow-200 " + border}
             onClick={handleClick}
             onMouseDown={() => setBorder(buttonDown)}
-            onMouseUp={() => setBorder(buttonDown)}
+            onMouseUp={() => setBorder(buttonUp)}
         >
             {char}
         </button>

@@ -25,36 +25,31 @@ export default function ForLoop({ demo }) {
             <br />
             <div>
                 <KeyWord>
-                    <span
-                        style={{
-                            padding,
-                            border: `${
-                                highlightSectionRanges.keyWord.includes(step)
-                                    ? "2px solid orange"
-                                    : 0
-                            }`,
-                        }}
+                    <div
+                        className={`${
+                            highlightSectionRanges.keyWord.includes(step)
+                                ? "border border-solid border-orange-600 py-1 px-2 inline-block"
+                                : "inline-block"
+                        }`}
                     >
                         {lex.keyWord.map((word, index) => (
                             <span
                                 key={`keword-${index}`}
-                                className={`${step === 1 ? "bg-cyan-400" : ""}`}
+                                className={`${
+                                    step === 1 ? "bg-cyan-400 rounded p-1" : ""
+                                }`}
                             >{`${word.text}`}</span>
                         ))}
-                    </span>
+                    </div>
                 </KeyWord>
                 {
                     <Expression>
                         <span
-                            style={{
-                                border: `${
-                                    highlightSectionRanges.expression.includes(
-                                        step
-                                    )
-                                        ? "2px solid orange"
-                                        : 0
-                                }`, // do not count () for steps
-                            }}
+                            className={`${
+                                highlightSectionRanges.expression.includes(step)
+                                    ? "border border-solid border-orange-600 py-1 px-2 mx-2 inline-block"
+                                    : "inline-block"
+                            }`}
                         >
                             {lex.expression.map((expression) => {
                                 return expression.content.map((part, index) => {
@@ -77,13 +72,11 @@ export default function ForLoop({ demo }) {
 
                 <CodeBlock>
                     <span
-                        style={{
-                            border: `${
-                                highlightSectionRanges.block.includes(step)
-                                    ? "2px solid orange"
-                                    : 0
-                            }`,
-                        }}
+                        className={`${
+                            highlightSectionRanges.block.includes(step)
+                                ? "border border-solid border-orange-600 py-1 px-2"
+                                : ""
+                        }`}
                     >
                         {lex.block.content.map((block, index) => {
                             let isFirst = index === 0;
