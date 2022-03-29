@@ -1,135 +1,16 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { Controls, ForLoop, KeyWord, Expression, CodeBlock } from "./";
-import Lexer from "../../lib/lexer";
+import { Layout, ForLoop } from "./";
+
 function App() {
     let demos = ["for ( let i = 0; i < 10; i++ ) { console.log(i); }"];
     let [demoOptions, setDemoOptions] = useState(demos);
-    let [lex, setLexer] = useState(new Lexer(demos[0]).getLex());
-    let highlightSectionRanges = {
-        keyWord: [1],
-        expression: [2, 3, 4],
-        block: [5],
-    };
-    let [step, setStep] = useState(1);
-    let padding = "0 5px";
+
     return (
         <div className="App">
-            <Controls
-                activeSection={step}
-                setActiveSection={setStep}
-                limits={[
-                    highlightSectionRanges.keyWord[0],
-                    highlightSectionRanges.block[
-                        highlightSectionRanges.block.length - 1
-                    ],
-                ]}
-            />
-            <br />
-            <ForLoop>
-                <div>
-                    <KeyWord>
-                        <span
-                            style={{
-                                padding,
-                                border: `${
-                                    highlightSectionRanges.keyWord.includes(
-                                        step
-                                    )
-                                        ? "2px solid orange"
-                                        : 0
-                                }`,
-                            }}
-                        >
-                            {lex.keyWord.map((word, index) => (
-                                <span
-                                    key={`keword-${index}`}
-                                    style={{
-                                        backgroundColor: `${
-                                            step === 1 ? "cyan" : ""
-                                        }`,
-                                    }}
-                                >{`${word.text}`}</span>
-                            ))}
-                        </span>
-                    </KeyWord>
-                    {
-                        <Expression>
-                            <span
-                                style={{
-                                    border: `${
-                                        highlightSectionRanges.expression.includes(
-                                            step
-                                        )
-                                            ? "2px solid orange"
-                                            : 0
-                                    }`, // do not count () for steps
-                                }}
-                            >
-                                {lex.expression.map((expression) => {
-                                    return expression.content.map(
-                                        (part, index) => {
-                                            return (
-                                                <span
-                                                    style={{
-                                                        backgroundColor: `${
-                                                            part.step === step
-                                                                ? "cyan"
-                                                                : ""
-                                                        }`,
-                                                        padding,
-                                                    }}
-                                                    key={`expression-${index}`}
-                                                >{`${part.text}`}</span>
-                                            );
-                                        }
-                                    );
-                                })}
-                            </span>
-                        </Expression>
-                    }
-
-                    <CodeBlock>
-                        <span
-                            style={{
-                                border: `${
-                                    highlightSectionRanges.block.includes(step)
-                                        ? "2px solid orange"
-                                        : 0
-                                }`,
-                            }}
-                        >
-                            {lex.block.content.map((block, index) => {
-                                let isFirst = index === 0;
-                                let isLast =
-                                    index === lex.block.content.length - 1;
-                                let indentedPadding = "0px 10px";
-                                return (
-                                    <>
-                                        {isLast && <br />}
-                                        <span
-                                            style={{
-                                                backgroundColor:
-                                                    block.step === step
-                                                        ? "cyan"
-                                                        : "",
-                                                padding:
-                                                    !isFirst && !isLast
-                                                        ? indentedPadding
-                                                        : isLast
-                                                        ? "0"
-                                                        : padding,
-                                            }}
-                                            key={`block-${index}`}
-                                        >{`${block.text}`}</span>
-                                        {isFirst && <br />}
-                                    </>
-                                );
-                            })}
-                        </span>
-                    </CodeBlock>
-                </div>
-            </ForLoop>
+            <Layout>
+                <ForLoop demo={demoOptions[0]} />
+            </Layout>
         </div>
     );
 }

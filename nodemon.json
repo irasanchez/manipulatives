@@ -1,4 +1,0 @@
-{
-    "watch": ["lib/", "src/"],
-    "ext": "js, css, jsx"
-  }
