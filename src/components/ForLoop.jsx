@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { KeyWord, CodeBlock, Expression, Controls } from "./";
-import Lexer from "../../lib/lexer";
+import Lexer from "../lib/lexer";
 export default function ForLoop({ demo }) {
     let [lex, setLexer] = useState(new Lexer(demo).getLex());
     let [step, setStep] = useState(1);
@@ -38,11 +38,7 @@ export default function ForLoop({ demo }) {
                         {lex.keyWord.map((word, index) => (
                             <span
                                 key={`keword-${index}`}
-                                style={{
-                                    backgroundColor: `${
-                                        step === 1 ? "cyan" : ""
-                                    }`,
-                                }}
+                                className={`${step === 1 ? "bg-cyan-400" : ""}`}
                             >{`${word.text}`}</span>
                         ))}
                     </span>
@@ -64,14 +60,12 @@ export default function ForLoop({ demo }) {
                                 return expression.content.map((part, index) => {
                                     return (
                                         <span
-                                            style={{
-                                                backgroundColor: `${
-                                                    part.step === step
-                                                        ? "cyan"
-                                                        : ""
-                                                }`,
-                                                padding,
-                                            }}
+                                            className={`${
+                                                part.step === step
+                                                    ? "bg-cyan-400"
+                                                    : ""
+                                            }
+                                                py-0 px-1`}
                                             key={`expression-${index}`}
                                         >{`${part.text}`}</span>
                                     );
@@ -94,23 +88,21 @@ export default function ForLoop({ demo }) {
                         {lex.block.content.map((block, index) => {
                             let isFirst = index === 0;
                             let isLast = index === lex.block.content.length - 1;
-                            let indentedPadding = "0px 10px";
                             return (
                                 <>
                                     {isLast && <br />}
                                     <span
-                                        style={{
-                                            backgroundColor:
-                                                block.step === step
-                                                    ? "cyan"
-                                                    : "",
-                                            padding:
-                                                !isFirst && !isLast
-                                                    ? indentedPadding
-                                                    : isLast
-                                                    ? "0"
-                                                    : padding,
-                                        }}
+                                        className={`${
+                                            block.step === step
+                                                ? "bg-cyan-400"
+                                                : ""
+                                        } ${
+                                            !isFirst && !isLast
+                                                ? "pl-5"
+                                                : isLast
+                                                ? "0"
+                                                : ""
+                                        }`}
                                         key={`block-${index}`}
                                     >{`${block.text}`}</span>
                                     {isFirst && <br />}
@@ -123,7 +115,6 @@ export default function ForLoop({ demo }) {
         </>
     );
 }
-
 
 /*
 
