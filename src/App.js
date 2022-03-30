@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useReducer } from "react";
 import ReactDOM from "react-dom";
 import { Layout, ForLoop } from "./components";
-
+import {
+    ForLoopContext,
+    initialForLoopState,
+    reducer,
+    ACTIONS,
+} from "./lib/state";
 function App() {
-    let demos = ["for ( let i = 0; i < 10; i++ ) { console.log(i); }"];
-    let [demoOptions, setDemoOptions] = useState(demos);
-
+    const [state, dispatch] = useReducer(reducer, initialForLoopState);
     return (
         <div className="App">
             <Layout>
-                <ForLoop demo={demoOptions[0]} />
+                <ForLoopContext.Provider value={{ state, dispatch, ACTIONS }}>
+                    <ForLoop />
+                </ForLoopContext.Provider>
             </Layout>
         </div>
     );
