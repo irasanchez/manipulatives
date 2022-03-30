@@ -10,7 +10,60 @@ export default function Controls({
 }) {
     const { state, dispatch, ACTIONS } = useContext(ForLoopContext);
     let { CHANGE_STEP, CHANGE_ITERATION_COUNT } = ACTIONS;
-    let { iterationCount, end } = state;
+    let { iterationCount, end, operators, iterator } = state;
+    function iterate(direction) {
+        let result = iterationCount;
+        switch (operators[iterator]) {
+            case "++":
+                if (direction === "forward") {
+                    result = iterationCount + 1;
+                } else {
+                    result = iterationCount - 1;
+                }
+                break;
+
+            case "--":
+                if (direction === "forward") {
+                    result = iterationCount - 1;
+                } else {
+                    result = iterationCount + 1;
+                }
+                break;
+            case "+= 2":
+                if (direction === "forward") {
+                    result = iterationCount + 2;
+                } else {
+                    result = iterationCount - 2;
+                }
+                break;
+            case "-= 2":
+                if (direction === "forward") {
+                    result = iterationCount - 2;
+                } else {
+                    result = iterationCount + 2;
+                }
+                break;
+            case "*= 2":
+                if (direction === "forward") {
+                    result = iterationCount * 2;
+                } else {
+                    result = iterationCount / 2;
+                }
+                break;
+            case "/= 2":
+                if (direction === "forward") {
+                    result = iterationCount / 2;
+                } else {
+                    result = iterationCount * 2;
+                }
+                break;
+            default:
+                result = iterationCount;
+                break;
+        }
+
+        return result;
+    }
     function goToNextStep() {
         if (limits[1] === activeSection) {
             if (iterationCount === end) {
@@ -19,7 +72,7 @@ export default function Controls({
             dispatch({ type: CHANGE_STEP, step: 1 });
             dispatch({
                 type: CHANGE_ITERATION_COUNT,
-                iterationCount: iterationCount + 1,
+                iterationCount: iterate("forward"),
             });
         } else {
             dispatch({
@@ -36,7 +89,7 @@ export default function Controls({
             dispatch({ type: CHANGE_STEP, step: limits[1] });
             dispatch({
                 type: CHANGE_ITERATION_COUNT,
-                iterationCount: iterationCount - 1,
+                iterationCount: iterate("backward"),
             });
         } else {
             dispatch({

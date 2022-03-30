@@ -1,12 +1,12 @@
 import { createContext } from "react";
 import Lexer from "./lexer";
-
+let start = 1;
 export const initialForLoopState = {
     operators: ["++" /*"--"*/, "+= 2", "*= 2" /*"/= 2", "-= 2"*/],
     iterator: 0,
-    start: 1,
-    end: 0,
-    iterationCount: 0,
+    start,
+    end: 10,
+    iterationCount: start,
     theme: "light",
     lex: new Lexer(
         "for ( let i = 0; i < 10; i++ ) { console.log(i); }"
@@ -40,6 +40,7 @@ export function reducer(state, action) {
         case "CHANGE_ITERATOR":
             return { ...state, iterator: action.iterator };
         case "CHANGE_ITERATION_COUNT":
+            console.log({ action });
             return { ...state, iterationCount: action.iterationCount };
         default:
             return state;
