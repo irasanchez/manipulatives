@@ -93,7 +93,7 @@ export default function ForLoop() {
                                                         : "text-xl p-4"
                                                 } ${
                                                     !isFirst && !isLast
-                                                        ? "pl-5"
+                                                        ? "pl-16"
                                                         : isLast
                                                         ? "0"
                                                         : ""

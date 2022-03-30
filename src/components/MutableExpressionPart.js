@@ -7,21 +7,22 @@ export default function MutableExpressionPart({ content, isActive }) {
     let characters = content.slice(0, splitPoint);
     let symbols = content.slice(splitPoint);
 
-    let operators = ["++", "--", "+ 2", "* 2", "/ 2", "- 2"];
-
     return (
         <span>
-            {characters === "i" ? characters : <Input isActive={isActive} value={+characters} />}
-            {symbols}
+            {characters === "i" ? (
+                characters
+            ) : (
+                <NumberInput isActive={isActive} value={+characters} />
+            )}
+            {!symbols.includes(";") ? <OperatorSelect /> : symbols}
         </span>
     );
 }
 
-function Input({ value, isActive }) {
-
+function NumberInput({ value, isActive }) {
     return (
         <NumericInput
-            className={`${isActive ? "active " :  ""}`}
+            className={`${isActive ? "active " : ""}`}
             value={value}
             min={1}
             max={99}
@@ -30,12 +31,13 @@ function Input({ value, isActive }) {
     );
 }
 
-function Select() {
+function OperatorSelect({}) {
+    let operators = ["++", "--", "+ 2", "* 2", "/ 2", "- 2"];
     return (
-        <select>
-            <option value="">Select</option>
-            <option value="">Select</option>
-            <option value="">Select</option>
+        <select disabled>
+            {operators.map((operator) => (
+                <option value={operator}>{operator}</option>
+            ))}
         </select>
     );
 }
