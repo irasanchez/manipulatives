@@ -1,15 +1,12 @@
 import React from "react";
 
-export default function Layout({ children }) {
+export default function Layout({ children, className }) {
     return (
-        <div className="p-10">
-            <div>
-                <div>
-                    <div className="w-full max-w-xl p-8 text-black border-4 border-black border-solid rounded-3xl">
-                        {children}
-                    </div>
-                </div>
-            </div>
+        <div
+            className="flex flex-col justify-between p-8 m-10 text-black border-t-4 border-b-8 border-l-4 border-r-8 border-black border-solid rounded-3xl"
+            style={{ maxWidth: "700px", minHeight: "450px" }}
+        >
+            {children}
         </div>
     );
 }

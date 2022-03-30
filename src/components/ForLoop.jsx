@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { KeyWord, CodeBlock, Expression, Controls } from "./";
+import { KeyWord, CodeBlock, Expression, Controls, ExpressionPart } from "./";
 import Lexer from "../lib/lexer";
 export default function ForLoop({ demo }) {
     let [lex, setLexer] = useState(new Lexer(demo).getLex());
@@ -9,34 +9,28 @@ export default function ForLoop({ demo }) {
         expression: [2, 3, 4],
         block: [5],
     };
-    let padding = "0 5px";
+    const sectionIsActive = (section) => {
+        return highlightSectionRanges[section].includes(step);
+    };
     return (
         <>
-            <Controls
-                activeSection={step}
-                setActiveSection={setStep}
-                limits={[
-                    highlightSectionRanges.keyWord[0],
-                    highlightSectionRanges.block[
-                        highlightSectionRanges.block.length - 1
-                    ],
-                ]}
-            />
-            <br />
+            <h2 className="mt-4 mb-12 text-right text-7xl">For Loop</h2>
             <div>
                 <KeyWord>
                     <div
                         className={`${
-                            highlightSectionRanges.keyWord.includes(step)
-                                ? "border border-solid border-orange-600 py-1 px-2 inline-block"
-                                : "inline-block"
+                            sectionIsActive("keyWord")
+                                ? "border-b-4 border-solid border-orange-600 inline-block py-1 px-2 "
+                                : "inline-block py-2 px-4 "
                         }`}
                     >
                         {lex.keyWord.map((word, index) => (
                             <span
                                 key={`keword-${index}`}
                                 className={`${
-                                    step === 1 ? "bg-cyan-400 rounded p-1" : ""
+                                    step === 1
+                                        ? "bg-cyan-400 rounded p-1  text-3xl"
+                                        : " text-xl p-1"
                                 }`}
                             >{`${word.text}`}</span>
                         ))}
@@ -46,23 +40,20 @@ export default function ForLoop({ demo }) {
                     <Expression>
                         <span
                             className={`${
-                                highlightSectionRanges.expression.includes(step)
-                                    ? "border border-solid border-orange-600 py-1 px-2 mx-2 inline-block"
-                                    : "inline-block"
+                                sectionIsActive("expression")
+                                    ? "border-b-4 border-solid border-orange-600 py-1 px-2 mx-2 inline-block"
+                                    : "inline-block py-2 px-4 mx-4"
                             }`}
                         >
                             {lex.expression.map((expression) => {
                                 return expression.content.map((part, index) => {
                                     return (
-                                        <span
-                                            className={`${
-                                                part.step === step
-                                                    ? "bg-cyan-400"
-                                                    : ""
-                                            }
-                                                py-0 px-1`}
+                                        <ExpressionPart
+                                            content={part.text}
                                             key={`expression-${index}`}
-                                        >{`${part.text}`}</span>
+                                            isActive={part.step === step}
+                                            mutable={part.manipulative}
+                                        />
                                     );
                                 });
                             })}
@@ -73,9 +64,9 @@ export default function ForLoop({ demo }) {
                 <CodeBlock>
                     <span
                         className={`${
-                            highlightSectionRanges.block.includes(step)
-                                ? "border border-solid border-orange-600 py-1 px-2"
-                                : ""
+                            sectionIsActive("block")
+                                ? "border-b-4 border-solid border-orange-600 p-2 "
+                                : "p-4"
                         }`}
                     >
                         {lex.block.content.map((block, index) => {
@@ -87,8 +78,8 @@ export default function ForLoop({ demo }) {
                                     <span
                                         className={`${
                                             block.step === step
-                                                ? "bg-cyan-400"
-                                                : ""
+                                                ? "bg-cyan-400 text-3xl"
+                                                : "text-xl p-4"
                                         } ${
                                             !isFirst && !isLast
                                                 ? "pl-5"
@@ -105,10 +96,17 @@ export default function ForLoop({ demo }) {
                     </span>
                 </CodeBlock>
             </div>
+            < br/>
+            <Controls
+                activeSection={step}
+                setActiveSection={setStep}
+                limits={[
+                    highlightSectionRanges.keyWord[0],
+                    highlightSectionRanges.block[
+                        highlightSectionRanges.block.length - 1
+                    ],
+                ]}
+            />
         </>
     );
 }
-
-/*
-
-*/

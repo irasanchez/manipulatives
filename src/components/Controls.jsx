@@ -9,7 +9,7 @@ export default function Controls({
     limits,
 }) {
     return (
-        <div className="flex justify-around w-1/3">
+        <div className="flex justify-end mt-2">
             <ControlButton
                 char="⬅️"
                 handleClick={() => {
