@@ -8,7 +8,7 @@ export const initialForLoopState = {
     lex: new Lexer(
         "for ( let i = 0; i < 10; i++ ) { console.log(i); }"
     ).getLex(),
-    step: 1,
+    step: 0,
     highlightSectionRanges: { keyWord: [1], expression: [2, 3, 4], block: [5] },
     sectionIsActive: (section, step) => {
         return this.highlightSectionRanges[section].includes(step);
