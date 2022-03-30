@@ -1,13 +1,19 @@
 import React from "react";
 import { MutableExpressionPart } from "./";
 
-export default function ExpressionPart({ content, isActive, mutable }) {
+export default function ExpressionPart({
+    content,
+    isActive,
+    mutable,
+    isDeclaration,
+    isComparison,
+}) {
     if (!mutable) {
         return (
             <span
                 className={`${
                     isActive
-                        ? "bg-cyan-400 text-3xl py-0 px-1"
+                        ? "bg-cyan-400 rounded text-3xl py-0 px-1"
                         : " text-xl py-0 px-2"
                 }
             `}
@@ -18,12 +24,18 @@ export default function ExpressionPart({ content, isActive, mutable }) {
             <span
                 className={`${
                     isActive
-                        ? "bg-cyan-400 text-3xl py-0 px-1"
+                        ? "bg-cyan-400 text-3xl rounded py-0 px-1"
                         : " text-xl py-0 px-2"
                 }
         `}
             >
-                <MutableExpressionPart content={content} isActive={isActive} />
+                <MutableExpressionPart
+                    isDeclaration={isDeclaration}
+                    isComparison={isComparison}
+                    content={content}
+                    isActive={isActive}
+                    key={content}
+                />
             </span>
         );
     }

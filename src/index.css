@@ -4,11 +4,13 @@
 .react-numeric-input {
     position: relative;
     display: inline-block;
-    border: 3px solid black;
+    border: 4px solid black;
+    background: transparent;
 }
 
 .react-numeric-input input {
-    border: 3px solid black;
+    caret-color: #f97316;
+    outline: none;
     max-width: 70px;
     padding-right: 3ex;
     box-sizing: border-box;
@@ -17,6 +19,7 @@
     padding-left: 4px;
     display: block;
     line-height: normal;
+    background: transparent;
 }
 
 .react-numeric-input input.active {

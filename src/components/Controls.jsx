@@ -8,40 +8,51 @@ export default function Controls({
     isPlaying,
     limits,
 }) {
-    const { dispatch, ACTIONS } = useContext(ForLoopContext);
-    let { CHANGE_STEP } = ACTIONS;
+    const { state, dispatch, ACTIONS } = useContext(ForLoopContext);
+    let { CHANGE_STEP, CHANGE_ITERATION_COUNT } = ACTIONS;
+    let { iterationCount, end } = state;
+    function goToNextStep() {
+        if (limits[1] === activeSection) {
+            if (iterationCount === end) {
+                return;
+            }
+            dispatch({ type: CHANGE_STEP, step: 1 });
+            dispatch({
+                type: CHANGE_ITERATION_COUNT,
+                iterationCount: iterationCount + 1,
+            });
+        } else {
+            dispatch({
+                type: CHANGE_STEP,
+                step: activeSection + 1,
+            });
+        }
+    }
+    function goToPreviousStep() {
+        if (limits[0] === activeSection) {
+            if (iterationCount === 0) {
+                return;
+            }
+            dispatch({ type: CHANGE_STEP, step: limits[1] });
+            dispatch({
+                type: CHANGE_ITERATION_COUNT,
+                iterationCount: iterationCount - 1,
+            });
+        } else {
+            dispatch({
+                type: CHANGE_STEP,
+                step: activeSection - 1,
+            });
+        }
+    }
     return (
         <div className="flex justify-end mt-2">
-            <ControlButton
-                char="⬅️"
-                handleClick={() => {
-                    if (limits[0] === activeSection) {
-                        dispatch({ type: CHANGE_STEP, step: 1 });
-                    } else {
-                        dispatch({
-                            type: CHANGE_STEP,
-                            step: activeSection - 1,
-                        });
-                    }
-                }}
-            />
+            <ControlButton char="⬅️" handleClick={goToPreviousStep} />
             <ControlButton
                 handleClick={() => togglePlaying(!isPlaying)}
                 char="⏯"
             />
-            <ControlButton
-                handleClick={() => {
-                    if (limits[1] === activeSection) {
-                        dispatch({ type: CHANGE_STEP, step: limits[1] });
-                    } else {
-                        dispatch({
-                            type: CHANGE_STEP,
-                            step: activeSection + 1,
-                        });
-                    }
-                }}
-                char="➡️"
-            />
+            <ControlButton handleClick={goToNextStep} char="➡️" />
         </div>
     );
 }

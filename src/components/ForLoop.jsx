@@ -5,13 +5,6 @@ import { ForLoopContext } from "../lib/state";
 export default function ForLoop() {
     const { state } = useContext(ForLoopContext);
     const { lex, step, highlightSectionRanges } = state;
-
-    let [, /*step*/ setStep] = useState(1);
-    // let highlightSectionRanges = {
-    //     keyWord: [1],
-    //     expression: [2, 3, 4],
-    //     block: [5],
-    // };
     const sectionIsActive = (section) => {
         return highlightSectionRanges[section].includes(step);
     };
@@ -24,7 +17,7 @@ export default function ForLoop() {
                             <div
                                 className={`${
                                     sectionIsActive("keyWord", step)
-                                        ? "border-b-4 border-solid border-orange-600 inline-block py-1 px-2 "
+                                        ? "border-b-4 border-solid border-orange-500 inline-block py-1 px-2 "
                                         : "inline-block py-2 px-4 "
                                 }`}
                             >
@@ -45,7 +38,7 @@ export default function ForLoop() {
                                 <span
                                     className={`${
                                         sectionIsActive("expression", step)
-                                            ? "border-b-4 border-solid border-orange-600 py-1 px-2 mx-2 inline-block"
+                                            ? "border-b-4 border-solid border-orange-500 py-1 px-2 mx-2 inline-block"
                                             : "inline-block py-2 px-4 mx-4"
                                     }`}
                                 >
@@ -54,6 +47,22 @@ export default function ForLoop() {
                                             (part, index) => {
                                                 return (
                                                     <ExpressionPart
+                                                        isDeclaration={
+                                                            expression.content[
+                                                                index - 1
+                                                            ]?.text === "="
+                                                        }
+                                                        isComparison={
+                                                            expression.content[
+                                                                index - 1
+                                                            ]?.text === "<" ||
+                                                            expression.content[
+                                                                index - 1
+                                                            ]?.text === ">" ||
+                                                            expression.content[
+                                                                index - 1
+                                                            ]?.text === "<="
+                                                        }
                                                         content={part.text}
                                                         key={`expression-${index}`}
                                                         isActive={
@@ -75,7 +84,7 @@ export default function ForLoop() {
                             <span
                                 className={`${
                                     sectionIsActive("block", step)
-                                        ? "border-b-4 border-solid border-orange-600 p-2 "
+                                        ? "border-b-4 border-solid border-orange-500 p-2 "
                                         : "p-4"
                                 }`}
                             >
@@ -89,7 +98,7 @@ export default function ForLoop() {
                                             <span
                                                 className={`${
                                                     block.step === step
-                                                        ? "bg-cyan-400 text-3xl"
+                                                        ? "bg-cyan-400 rounded text-3xl"
                                                         : "text-xl p-4"
                                                 } ${
                                                     !isFirst && !isLast

@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import NumericInput from "react-numeric-input";
-import NumicInput from "react-numeric-input";
+import { ForLoopContext } from "../lib/state";
 
-export default function MutableExpressionPart({ content, isActive }) {
+export default function MutableExpressionPart({
+    content,
+    isActive,
+    isDeclaration,
+    isComparison,
+}) {
     let splitPoint = content.search(/\d/) - 1;
     let characters = content.slice(0, splitPoint);
     let symbols = content.slice(splitPoint);
@@ -12,31 +17,48 @@ export default function MutableExpressionPart({ content, isActive }) {
             {characters === "i" ? (
                 characters
             ) : (
-                <NumberInput isActive={isActive} value={+characters} />
+                <NumberInput isActive={isActive} isStart={isDeclaration} />
             )}
             {!symbols.includes(";") ? <OperatorSelect /> : symbols}
         </span>
     );
 }
 
-function NumberInput({ value, isActive }) {
+function NumberInput({ value, isActive, isStart }) {
+    const { state, dispatch, ACTIONS } = useContext(ForLoopContext);
+    const { CHANGE_ITERATOR, CHANGE_END, CHANGE_START } = ACTIONS;
+    const { start, end } = state;
     return (
         <NumericInput
+            onChange={(valueAsNumber) => {
+                dispatch({
+                    type: isStart ? CHANGE_START : CHANGE_END,
+                    [`${isStart ? "start" : "end"}`]: valueAsNumber,
+                });
+            }}
             className={`${isActive ? "active " : ""}`}
-            value={value}
+            value={isStart ? start : end}
             min={1}
             max={99}
-            readOnly={true}
+            // readOnly={step === 0}
         />
     );
 }
 
-function OperatorSelect({}) {
-    let operators = ["++", "--", "+ 2", "* 2", "/ 2", "- 2"];
+function OperatorSelect() {
+    const { state, dispatch, ACTIONS } = useContext(ForLoopContext);
+    const { CHANGE_ITERATOR } = ACTIONS;
+    const { operators } = state;
     return (
-        <select disabled>
-            {operators.map((operator) => (
-                <option value={operator}>{operator}</option>
+        <select
+            className="mx-2 border-4 border-black border-solid"
+            disabled={false}
+            onChange={(e) =>
+                dispatch({ type: CHANGE_ITERATOR, iterator: e.target.value })
+            }
+        >
+            {operators.map((operator, index) => (
+                <option value={index}>{operator}</option>
             ))}
         </select>
     );

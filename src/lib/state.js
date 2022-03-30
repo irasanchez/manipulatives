@@ -1,9 +1,12 @@
-import { createContext, useReducer } from "react";
+import { createContext } from "react";
 import Lexer from "./lexer";
 
 export const initialForLoopState = {
-    start: 0,
+    operators: ["++" /*"--"*/, "+= 2", "*= 2" /*"/= 2", "-= 2"*/],
+    iterator: 0,
+    start: 1,
     end: 0,
+    iterationCount: 0,
     theme: "light",
     lex: new Lexer(
         "for ( let i = 0; i < 10; i++ ) { console.log(i); }"
@@ -30,6 +33,14 @@ export function reducer(state, action) {
             };
         case "TOGGLE_ACTIVE_SECTION":
             return { ...state, sectionIsActive: action.sectionIsActive };
+        case "CHANGE_START":
+            return { ...state, start: action.start };
+        case "CHANGE_END":
+            return { ...state, end: action.end };
+        case "CHANGE_ITERATOR":
+            return { ...state, iterator: action.iterator };
+        case "CHANGE_ITERATION_COUNT":
+            return { ...state, iterationCount: action.iterationCount };
         default:
             return state;
     }
@@ -40,4 +51,8 @@ export const ACTIONS = {
     CHANGE_STEP: "CHANGE_STEP",
     CHANGE_HIGHLIGHT_SECTION_RANGES: "CHANGE_HIGHLIGHT_SECTION_RANGES",
     TOGGLE_ACTIVE_SECTION: "TOGGLE_ACTIVE_SECTION",
+    CHANGE_START: "CHANGE_START",
+    CHANGE_END: "CHANGE_END",
+    CHANGE_ITERATOR: "CHANGE_ITERATOR",
+    CHANGE_ITERATION_COUNT: "CHANGE_ITERATION_COUNT",
 };
