@@ -34,7 +34,11 @@ export function reducer(state, action) {
         case "TOGGLE_ACTIVE_SECTION":
             return { ...state, sectionIsActive: action.sectionIsActive };
         case "CHANGE_START":
-            return { ...state, start: action.start };
+            return {
+                ...state,
+                start: action.start,
+                iterationCount: action.start,
+            };
         case "CHANGE_END":
             return { ...state, end: action.end };
         case "CHANGE_ITERATOR":
