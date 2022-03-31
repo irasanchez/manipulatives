@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import { KeyWord, CodeBlock, Expression, Controls, ExpressionPart } from "./";
 import { ForLoopContext } from "../lib/state";
-
+import speechBubble from "../assets/pixel-speech-bubble.gif";
 export default function ForLoop() {
     const { state } = useContext(ForLoopContext);
-    const { lex, step, highlightSectionRanges } = state;
+    const { lex, step, highlightSectionRanges, iterationCount } = state;
     const sectionIsActive = (section) => {
         return highlightSectionRanges[section].includes(step);
     };
@@ -26,7 +26,7 @@ export default function ForLoop() {
                                         key={`keword-${index}`}
                                         className={`${
                                             step === 1
-                                                ? "bg-cyan-400 rounded p-1  text-3xl"
+                                                ? "bg-cyan-400 p-1  text-3xl"
                                                 : " text-xl p-1"
                                         }`}
                                     >{`${word.text}`}</span>
@@ -98,7 +98,7 @@ export default function ForLoop() {
                                             <span
                                                 className={`${
                                                     block.step === step
-                                                        ? "bg-cyan-400 rounded text-3xl"
+                                                        ? "bg-cyan-400 text-3xl"
                                                         : "text-xl p-4"
                                                 } ${
                                                     !isFirst && !isLast
@@ -117,15 +117,28 @@ export default function ForLoop() {
                         </CodeBlock>
                     </div>
                     <br />
-                    <Controls
-                        activeSection={step}
-                        limits={[
-                            highlightSectionRanges.keyWord[0],
-                            highlightSectionRanges.block[
-                                highlightSectionRanges.block.length - 1
-                            ],
-                        ]}
-                    />
+                    <div className="flex items-center justify-between mt-10 ">
+                        <div className="relative w-full ">
+                            <span className="text-8xl">💻</span>
+                            {/* speech bubble made here https://pixelspeechbubble.com/ */}
+                            <img
+                                src={speechBubble}
+                                className="absolute w-1/3 -top-5 left-10"
+                            />
+                            <span className="absolute font-bold text-red-500 left-1/3 -top-5 font-digital">
+                                {iterationCount}
+                            </span>
+                        </div>
+                        <Controls
+                            activeSection={step}
+                            limits={[
+                                highlightSectionRanges.keyWord[0],
+                                highlightSectionRanges.block[
+                                    highlightSectionRanges.block.length - 1
+                                ],
+                            ]}
+                        />
+                    </div>
                 </>
             )}
         </ForLoopContext.Consumer>

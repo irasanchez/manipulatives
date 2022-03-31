@@ -8,12 +8,14 @@ export default function ControlButton({ handleClick, char }) {
     const [border, setBorder] = useState(buttonUp);
     return (
         <button
-            className={"w-14 h-14 rounded-full mx-2 hover:bg-yellow-400 " + border}
+            className={
+                "w-14 h-14 rounded-full mx-2 hover:bg-yellow-400 " + border
+            }
             onClick={handleClick}
             onMouseDown={() => setBorder(buttonDown)}
             onMouseUp={() => setBorder(buttonUp)}
         >
-            {char}
+            <span className="text-3xl">{char}</span>
         </button>
     );
 }
