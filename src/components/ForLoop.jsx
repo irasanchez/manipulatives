@@ -125,7 +125,7 @@ export default function ForLoop() {
                                 src={speechBubble}
                                 className="absolute w-1/3 -top-5 left-10"
                             />
-                            <span className="absolute font-bold text-red-500 left-1/3 -top-5 font-digital">
+                            <span className="absolute font-bold text-red-500 left-1/3 -top-5">
                                 {iterationCount}
                             </span>
                         </div>

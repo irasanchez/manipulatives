@@ -10,7 +10,8 @@ export default function Controls({
 }) {
     const { state, dispatch, ACTIONS } = useContext(ForLoopContext);
     let { CHANGE_STEP, CHANGE_ITERATION_COUNT } = ACTIONS;
-    let { iterationCount, end, operators, iterator } = state;
+    let { iterationCount, end, operators, iterator, start } = state;
+
     function iterate(direction) {
         let result = iterationCount;
         switch (operators[iterator]) {
@@ -83,7 +84,7 @@ export default function Controls({
     }
     function goToPreviousStep() {
         if (limits[0] === activeSection) {
-            if (iterationCount === 0) {
+            if (iterationCount === start) {
                 return;
             }
             dispatch({ type: CHANGE_STEP, step: limits[1] });
