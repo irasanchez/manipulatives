@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
-import { Layout, ForLoop } from "./";
+
+import { Values } from ".";
 
 function App() {
     let demos = ["for ( let i = 0; i < 10; i++ ) { console.log(i); }"];
@@ -8,9 +8,8 @@ function App() {
 
     return (
         <div className="App">
-            <Layout>
-                <ForLoop demo={demoOptions[0]} />
-            </Layout>
+            test
+            <Values />
         </div>
     );
 }
