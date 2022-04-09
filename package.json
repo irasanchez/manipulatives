@@ -16,7 +16,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "cypress run-ct",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -38,7 +38,10 @@
     ]
   },
   "devDependencies": {
+    "@cypress/react": "^5.12.4",
+    "@cypress/webpack-dev-server": "^1.8.4",
     "autoprefixer": "^10.4.4",
+    "cypress": "^9.5.3",
     "postcss": "^8.4.12",
     "tailwindcss": "^3.0.23"
   }
