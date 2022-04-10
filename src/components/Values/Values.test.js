@@ -1,7 +1,11 @@
-import { mounter } from "../../lib/testHelpers";
+import { goToRoute, mounter } from "../../lib/testHelpers";
 
-it("renders Values", () => {
-    mounter();
-    cy.get("nav").contains("a", "Values").click({ force: true });
-    cy.contains(".Values h1", "Values");
+describe("Values component is working", () => {
+    it("is rendered at the right route", () => {
+        mounter();
+        goToRoute("Values");
+        cy.url;
+        cy.contains(".Values h1", "Values");
+        cy.url().should("include", "/values");
+    });
 });

@@ -9,3 +9,9 @@ export const mounter = () =>
             <App />
         </BrowserRouter>
     );
+
+export const goToRoute = (navLinkText) => {
+    cy.get("nav").contains("a", navLinkText).click({ force: true }); // force:true allows it to click through the testing iframe
+
+    cy.get(`.${navLinkText}`).should("have.class", navLinkText);
+};
