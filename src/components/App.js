@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink, Route, Routes } from "react-router-dom";
+import Values from "./Values/Values";
 
 function App() {
     return (
@@ -12,8 +13,9 @@ function App() {
                 <NavLink></NavLink> */}
             </nav>
             <Routes>
-                <Route index element={() => null} />
-                <Route path="/values" element={() => null} />
+                <Route path="/">
+                    <Route path="/values" element={<Values />} />
+                </Route>
             </Routes>
         </div>
     );
