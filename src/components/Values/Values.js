@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { dataTypes, expressions } from "../../lib";
 export default function Values() {
     let keyCaps = dataTypes.map((dt) => {
@@ -48,15 +48,34 @@ export default function Values() {
             transform: "rotateX(50deg)",
         },
     };
+    const checkIfGuessIsCorrect = () => {};
+    const handleKeyDown = (e) => {
+        let keyCapPressed = keyCaps.filter((keyCap) => {
+            return keyCap.key.toLowerCase() === e.key;
+        });
+        console.log(keyCapPressed);
+    };
+
+    useEffect(() => {
+        window.addEventListener("keydown", handleKeyDown);
+    }, []);
     return (
         <div className="flex flex-col items-center justify-center Values">
             <h1 className="Values__title">Values</h1>
-            <p className="Values__instructions">
-                Evaluate the expression and press the keyboard key to guess the
-                resulting value's data type.
-            </p>
-            <div className="Values__expression">
-                {expressions.easy[0].expression}
+            <div className="flex justify-between">
+                <p className="w-1/2 p-4 Values__instructions">
+                    Evaluate the expression and press the keyboard key to guess
+                    the resulting value's data type.
+                </p>
+                <div className="p-2 Values__scoreboard">
+                    <div className="Values__score--total">total score</div>
+                    <div className="Values__score--guess">
+                        most recent in/correct
+                    </div>
+                </div>
+            </div>
+            <div className="flex items-center justify-center w-1/2 h-24 my-4 text-5xl text-center bg-gray-200 rounded Values__expression text-upright-orange">
+                <span>{expressions.easy[0].expression}</span>
             </div>
             <div className="flex flex-col items-center justify-center w-1/2 Values__options">
                 <div>

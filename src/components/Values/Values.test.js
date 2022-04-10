@@ -46,5 +46,19 @@ describe("Values component is working", () => {
                 keyCaps[index].key + keyCaps[index].type
             );
         });
+        it("changes the expression when a button is pushed", () => {});
+        it("allows the buttons to be activated via keyboard", () => {
+            // this is done, but I am not sure how to test it yet
+        });
+        it("tells you if your guess is correct or incorrect", () => {
+            cy.get("Values__score--guess");
+        });
+        it("tells you your overall accuracy", () => {
+            cy.get("Values__score--total");
+        });
+        it("changes the score color based on accuracy", () => {
+            cy.get("Values__score--total");
+            cy.get("Values__score--guess");
+        });
     });
 });
