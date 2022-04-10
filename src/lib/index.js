@@ -8,3 +8,12 @@ export const dataTypes = [
     "Symbol",
     "Object",
 ];
+
+export const expressions = {
+    easy: [
+        { expression: 0, type: Number },
+        { expression: "number", type: String },
+    ],
+    medium: [],
+    hard: [],
+};
