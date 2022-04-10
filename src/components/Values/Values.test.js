@@ -12,6 +12,11 @@ describe("Values component is working", () => {
         cy.url().should("include", "/values");
     });
 
+    it("renders a working back button", () => {
+        cy.get("Values__back-button").click({ force: true });
+        cy.url().should("not.include", "/values");
+    });
+
     it("displays instructions", () => {
         cy.get(".Values__instructions")
             .filter(":visible")
