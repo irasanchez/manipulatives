@@ -15,3 +15,7 @@ Each `components/<directory>` is its own manipulative.
 ## Styling
 
 This project is styled using tailwindcss.
+
+## Testing
+
+-   `pnpm run test` to run Cypress.io
