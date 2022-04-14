@@ -1,23 +1,24 @@
 import { goToRoute, mounter } from "../../lib/testHelpers";
 import { dataTypes } from "../../lib";
 
+
 describe("Values component is working", () => {
     beforeEach(() => {
         mounter();
-        goToRoute("Values");
-    });
-
+    })
     it("is rendered at the right route", () => {
+        goToRoute('Values')
         cy.contains(".Values h1", "Values");
         cy.url().should("include", "/values");
     });
 
     it("renders a working back button", () => {
-        cy.get("Values__back-button").click({ force: true });
+        cy.get(".Values__back-button").click({ force: true });
         cy.url().should("not.include", "/values");
     });
 
     it("displays instructions", () => {
+        goToRoute('Values')
         cy.get(".Values__instructions")
             .filter(":visible")
             .contains(
