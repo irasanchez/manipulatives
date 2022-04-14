@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import BackButton from "../StyledComponents/BackButton";
+
 import { dataTypes, expressions } from "../../lib";
 export default function Values() {
     let keyCaps = dataTypes.map((dt) => {
@@ -54,7 +55,6 @@ export default function Values() {
         let keyCapPressed = keyCaps.filter((keyCap) => {
             return keyCap.key.toLowerCase() === e.key;
         });
-        console.log(keyCapPressed);
     };
 
     useEffect(() => {
@@ -62,12 +62,7 @@ export default function Values() {
     }, []);
     return (
         <div className="relative flex flex-col items-center justify-center Values">
-            <Link
-                to="/"
-                className="absolute top-0 left-0 flex items-center justify-center w-12 h-12 pl-0 pr-1 m-4 text-center rounded-full shadow-xl Values__back-button bg-upright-orange"
-            >
-                ⬅️
-            </Link>
+            <BackButton />
             <h1 className="Values__title">Values</h1>
             <div className="flex justify-between">
                 <p className="w-1/2 p-4 Values__instructions">
@@ -91,6 +86,7 @@ export default function Values() {
                             style={styles.Values__key}
                             className="Values__option Values__key"
                             key={i}
+                            id={`Values__option--${i}`}
                         >
                             <div
                                 style={styles.Values__keycap}
