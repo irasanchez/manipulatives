@@ -63,11 +63,11 @@ export default function Values() {
     return (
         <div className="relative flex flex-col items-center justify-center Values">
             <BackButton />
-            <h1 className="Values__title">Values</h1>
-            <div className="flex justify-between">
+            <h1 className="mt-6 text-4xl font-bold Values__title">Values</h1>
+            <div className="flex justify-between mt-12">
                 <p className="w-1/2 p-4 Values__instructions">
-                    Evaluate the expression and press the keyboard key to guess
-                    the resulting value's data type.
+                    Press the keyboard key to guess the resulting value's data
+                    type.
                 </p>
                 <div className="p-2 Values__scoreboard">
                     <div className="Values__score--total">total score</div>
@@ -79,31 +79,30 @@ export default function Values() {
             <div className="flex items-center justify-center w-1/2 h-24 my-4 text-5xl text-center bg-gray-200 rounded Values__expression text-upright-orange">
                 <span>{expressions.easy[0].expression}</span>
             </div>
-            <div className="flex flex-col items-center justify-center w-1/2 Values__options">
-                <div>
-                    {keyCaps.slice(0, 4).map((dt, i) => (
-                        <button
-                            style={styles.Values__key}
-                            className="Values__option Values__key"
-                            key={i}
-                            id={`Values__option--${i}`}
+            <div className="flex flex-wrap items-center justify-center w-2/3 mx-auto mt-4 Values__options">
+                {keyCaps.map((dt, i) => (
+                    <button
+                        style={styles.Values__key}
+                        className="Values__option Values__key"
+                        key={i}
+                        id={`Values__option--${i}`}
+                    >
+                        <div
+                            style={styles.Values__keycap}
+                            className="Values__keycap"
                         >
-                            <div
-                                style={styles.Values__keycap}
-                                className="Values__keycap"
+                            {dt.key}
+                            <span
+                                style={styles["Values__keycap--side"]}
+                                className="Values__keycap--side"
                             >
-                                {dt.key}
-                                <span
-                                    style={styles["Values__keycap--side"]}
-                                    className="Values__keycap--side"
-                                >
-                                    {dt.type}
-                                </span>
-                            </div>
-                        </button>
-                    ))}
-                </div>
-                <div>
+                                {dt.type}
+                            </span>
+                        </div>
+                    </button>
+                ))}
+
+                {/* <div>
                     {keyCaps.slice(4).map((keyCap, i) => (
                         <button
                             style={styles.Values__key}
@@ -124,7 +123,7 @@ export default function Values() {
                             </div>
                         </button>
                     ))}
-                </div>
+                </div> */}
             </div>
         </div>
     );
