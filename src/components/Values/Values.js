@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import BackButton from "../StyledComponents/BackButton";
+import Title from "../StyledComponents/Title";
 
 import { dataTypes, expressions } from "../../lib";
+import Scoreboard from "../StyledComponents/Scoreboard";
+
 export default function Values() {
     let keyCaps = dataTypes.map((dt) => {
         let key =
@@ -50,34 +53,89 @@ export default function Values() {
             transform: "rotateX(50deg)",
         },
     };
-    const checkIfGuessIsCorrect = () => {};
+
+    const [currentExpression, setCurrentExpression] = useState(
+        expressions.easy[0]
+    );
+    const [score, setScore] = useState(0);
+
+    const checkIfGuessIsCorrectAndUpdate = (key) => {
+        let isCorrect = false;
+        switch (key) {
+            case "B":
+                if ("Boolean" === currentExpression.type) {
+                    isCorrect = true;
+                }
+            case "N":
+                if ("Null" === currentExpression.type) {
+                    isCorrect = true;
+                }
+            case "U":
+                if ("Undefined" === currentExpression.type) {
+                    isCorrect = true;
+                }
+            case "M":
+                if ("Number" === currentExpression.type) {
+                    isCorrect = true;
+                }
+            case "I":
+                if ("BigInt" === currentExpression.type) {
+                    isCorrect = true;
+                }
+            case "S":
+                if ("String" === currentExpression.type) {
+                    isCorrect = true;
+                }
+            case "Y":
+                if ("Symbol" === currentExpression.type) {
+                    isCorrect = true;
+                }
+            case "O":
+                if ("Object" === currentExpression.type) {
+                    isCorrect = true;
+                }
+
+            default:
+                break;
+        }
+        if (isCorrect) {
+            setScore(score + 1);
+        }
+        let expressionIndex = expressions.easy.indexOf(currentExpression);
+        console.log({ expressionIndex });
+        if (expressionIndex === expressions.easy.length - 1) {
+            setCurrentExpression(expressions.easy[0]);
+        }
+        console.log({ expressionIndex });
+        let nextExpression = expressions.easy[expressionIndex + 1];
+        setCurrentExpression(nextExpression);
+    };
+
     const handleKeyDown = (e) => {
         let keyCapPressed = keyCaps.filter((keyCap) => {
             return keyCap.key.toLowerCase() === e.key;
         });
+
+        checkIfGuessIsCorrectAndUpdate(keyCapPressed[0].key);
     };
 
     useEffect(() => {
         window.addEventListener("keydown", handleKeyDown);
     }, []);
+
     return (
-        <div className="relative flex flex-col items-center justify-center Values">
+        <main className="relative flex flex-col items-center justify-center Values">
             <BackButton />
-            <h1 className="mt-6 text-4xl font-bold Values__title">Values</h1>
+            <Title className="Values__title">Values</Title>
             <div className="flex justify-between mt-12">
                 <p className="w-1/2 p-4 Values__instructions">
                     Press the keyboard key to guess the resulting value's data
                     type.
                 </p>
-                <div className="p-2 Values__scoreboard">
-                    <div className="Values__score--total">total score</div>
-                    <div className="Values__score--guess">
-                        most recent in/correct
-                    </div>
-                </div>
             </div>
+            <Scoreboard></Scoreboard>
             <div className="flex items-center justify-center w-1/2 h-24 my-4 text-5xl text-center bg-gray-200 rounded Values__expression text-upright-orange">
-                <span>{expressions.easy[0].expression}</span>
+                <span>{currentExpression.expression}</span>
             </div>
             <div className="flex flex-wrap items-center justify-center w-2/3 mx-auto mt-4 Values__options">
                 {keyCaps.map((dt, i) => (
@@ -86,6 +144,7 @@ export default function Values() {
                         className="Values__option Values__key"
                         key={i}
                         id={`Values__option--${i}`}
+                        onClick={() => checkIfGuessIsCorrectAndUpdate(dt.key)}
                     >
                         <div
                             style={styles.Values__keycap}
@@ -101,30 +160,7 @@ export default function Values() {
                         </div>
                     </button>
                 ))}
-
-                {/* <div>
-                    {keyCaps.slice(4).map((keyCap, i) => (
-                        <button
-                            style={styles.Values__key}
-                            className="Values__option Values__key"
-                            key={i}
-                        >
-                            <div
-                                style={styles.Values__keycap}
-                                className="Values__keycap"
-                            >
-                                {keyCap.key}
-                                <span
-                                    style={styles["Values__keycap--side"]}
-                                    className="Values__keycap--side"
-                                >
-                                    {keyCap.type}
-                                </span>
-                            </div>
-                        </button>
-                    ))}
-                </div> */}
             </div>
-        </div>
+        </main>
     );
 }

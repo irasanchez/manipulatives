@@ -21,7 +21,7 @@ describe("Values component is working", () => {
         cy.get(".Values__instructions")
             .filter(":visible")
             .contains(
-                "Evaluate the expression and press the keyboard key to guess the resulting value's data type."
+                "Press the keyboard key to guess the resulting value's data type."
             );
     });
 
