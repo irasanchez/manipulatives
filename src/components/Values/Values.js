@@ -54,61 +54,69 @@ export default function Values() {
         },
     };
 
-    const [currentExpression, setCurrentExpression] = useState(
-        expressions.easy[0]
-    );
+    const [currentExpression, setCurrentExpression] = useState(0);
     const [score, setScore] = useState(0);
 
     const checkIfGuessIsCorrectAndUpdate = (key) => {
+        let type = expressions.easy[currentExpression].type;
         let isCorrect = false;
         switch (key) {
             case "B":
-                if ("Boolean" === currentExpression.type) {
+                if (Boolean === type) {
                     isCorrect = true;
                 }
+                break;
             case "N":
-                if ("Null" === currentExpression.type) {
+                if (null === type) {
                     isCorrect = true;
                 }
+                break;
             case "U":
-                if ("Undefined" === currentExpression.type) {
+                if (undefined === type) {
                     isCorrect = true;
                 }
+                break;
             case "M":
-                if ("Number" === currentExpression.type) {
+                if (Number === type) {
                     isCorrect = true;
                 }
+                break;
             case "I":
-                if ("BigInt" === currentExpression.type) {
+                if (BigInt === type) {
                     isCorrect = true;
                 }
+                break;
             case "S":
-                if ("String" === currentExpression.type) {
+                console.log(key, "S case", currentExpression);
+                if (String === type) {
                     isCorrect = true;
                 }
+                break;
             case "Y":
-                if ("Symbol" === currentExpression.type) {
+                if (Symbol === type) {
                     isCorrect = true;
                 }
+                break;
             case "O":
-                if ("Object" === currentExpression.type) {
+                if (Object === type) {
                     isCorrect = true;
                 }
+                break;
 
             default:
                 break;
         }
+
         if (isCorrect) {
             setScore(score + 1);
         }
-        let expressionIndex = expressions.easy.indexOf(currentExpression);
-        console.log({ expressionIndex });
-        if (expressionIndex === expressions.easy.length - 1) {
-            setCurrentExpression(expressions.easy[0]);
+
+        if (currentExpression === expressions.easy.length - 1) {
+            setCurrentExpression(0);
+        } else {
+            let nextExpression = currentExpression + 1;
+            setCurrentExpression(nextExpression);
         }
-        console.log({ expressionIndex });
-        let nextExpression = expressions.easy[expressionIndex + 1];
-        setCurrentExpression(nextExpression);
     };
 
     const handleKeyDown = (e) => {
@@ -116,12 +124,20 @@ export default function Values() {
             return keyCap.key.toLowerCase() === e.key;
         });
 
-        checkIfGuessIsCorrectAndUpdate(keyCapPressed[0].key);
+        if (keyCapPressed.length) {
+            checkIfGuessIsCorrectAndUpdate(keyCapPressed[0].key.toUpperCase());
+        }
     };
 
     useEffect(() => {
         window.addEventListener("keydown", handleKeyDown);
-    }, []);
+
+        function removeWhenUnmounted() {
+            window.removeEventListener("keydown", handleKeyDown);
+        }
+
+        return removeWhenUnmounted;
+    }, [currentExpression]);
 
     return (
         <main className="relative flex flex-col items-center justify-center Values">
@@ -135,7 +151,7 @@ export default function Values() {
             </div>
             <Scoreboard></Scoreboard>
             <div className="flex items-center justify-center w-1/2 h-24 my-4 text-5xl text-center bg-gray-200 rounded Values__expression text-upright-orange">
-                <span>{currentExpression.expression}</span>
+                <span>{expressions.easy[currentExpression].expression}</span>
             </div>
             <div className="flex flex-wrap items-center justify-center w-2/3 mx-auto mt-4 Values__options">
                 {keyCaps.map((dt, i) => (

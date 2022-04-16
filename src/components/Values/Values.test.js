@@ -52,7 +52,7 @@ describe("Values component is working", () => {
             );
         });
     });
-    it("changes the expression when a button is pushed", () => {
+    it("changes the expression when a button is clicked or pushed on the keyboard", () => {
         cy.get(".Values__expression").then(($before) => {
             let beforeText = $before.text();
             cy.get("#Values__option--0")
@@ -64,9 +64,19 @@ describe("Values component is working", () => {
                             new RegExp(afterText, "g")
                         );
                     });
+
+                    // and then a button is pushed
+                    cy.get(".Values").trigger("keydown", {
+                        key: "B",
+                    });
+                    cy.get(".Values__expression").then(($after) => {
+                        let afterText = $after.text();
+                        expect(beforeText).to.not.match(
+                            new RegExp(afterText, "g")
+                        );
+                    });
                 });
         });
-        // and then a button is pushed
     });
     // it("allows the buttons to be activated via keyboard", () => {
     //     // this is done, but I am not sure how to test it yet

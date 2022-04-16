@@ -11,7 +11,9 @@ let root = ReactDOMClient.createRoot(container);
 
 root.render(
     <BrowserRouter>
-        <App />
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>
     </BrowserRouter>
 );
 

@@ -16,6 +16,7 @@ export const expressions = {
         { expression: "5 + 5", type: Number },
         { expression: "0 + '1'", type: String },
         { expression: "'0' + 1", type: String },
+        { expression: "null", type: null },
     ],
     medium: [],
     hard: [],
