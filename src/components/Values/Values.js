@@ -6,10 +6,12 @@ import { expressions } from "../../lib";
 import Scoreboard from "./Scoreboard";
 import KeyCaps from "./KeyCaps";
 import Instructions from "./Instructions";
+import Modal from "react-modal";
 
 export default function Values() {
     const [currentExpression, setCurrentExpression] = useState(0);
     const [score, setScore] = useState(0);
+    const [modalIsOpen, setIsOpen] = useState(false);
 
     const checkIfGuessIsCorrectAndUpdate = (key) => {
         let type = expressions.easy[currentExpression].type;
@@ -84,6 +86,14 @@ export default function Values() {
         }
     };
 
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
     useEffect(() => {
         window.addEventListener("keydown", handleKeyDown);
 
@@ -95,14 +105,34 @@ export default function Values() {
     }, [currentExpression]);
 
     return (
-        <main className="relative flex flex-col items-center justify-center Values">
+        <main className="relative flex flex-col items-center justify-center Values bg-green-200 h-full">
             <BackButton />
             <Title className="Values__title">Values</Title>
-            <Instructions>
-                Press the keyboard key to guess the resulting value's data type.
-            </Instructions>
-            <Scoreboard></Scoreboard>
-            <div className="flex items-center justify-center w-1/2 h-24 my-4 text-5xl text-center bg-gray-200 rounded Values__expression text-upright-orange">
+            <button
+                className="absolute top-0 right-0 flex items-center justify-center w-12 h-12 pl-0 pr-1 m-4 text-center  "
+                onClick={openModal}
+            >
+                ℹ️
+            </button>
+            <Modal
+                style={{
+                    content: { height: "20vh", width: "70vw", inset: "160px" },
+                }}
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                contentLabel="Instructions"
+            >
+                <Instructions>
+                    <div className="flex w-full justify-between">
+                        <p>
+                            Press the keyboard key to guess the resulting
+                            value's data type.
+                        </p>
+                        <button onClick={closeModal}>❌</button>
+                    </div>
+                </Instructions>
+            </Modal>
+            <div className="flex items-center justify-center w-1/2 h-24 my-4 text-5xl text-center bg-gray-100 rounded Values__expression text-green-600">
                 <span>{expressions.easy[currentExpression].expression}</span>
             </div>
             <KeyCaps
